@@ -1,0 +1,13 @@
+/* 
+    Document   : generalLayout
+    Created on : Nov 18, 2013, 1:58:21 AM
+    Author     : mac
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+ #main_content_g{background-image:url('/img/bkgd.png');height: 660px; z-index:0;position: relative;}

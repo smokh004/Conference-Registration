@@ -1,0 +1,184 @@
+
+
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+
+<%@page import="Manager.UserManager"%>
+<%@page import="Entity.UserInfo"%>
+<%
+    // keep register/sign in messages(i.e. wrong email or password/ email has been userd.)
+    String userMsg = "";
+    try {
+        // action indicates whether it's register or sign in or sign out
+        String action = request.getParameter("user_action");
+
+        // handle register
+        
+            // handle sign in
+         if (action.compareTo("signin") == 0) {
+            String email = request.getParameter("email");
+            if (email != null) {
+                try {
+                    String password = request.getParameter("password");
+                    UserInfo user;
+                    UserManager mgnr = new UserManager();
+                    user = mgnr.getUser(email, password);
+                    // if successfully signed in, set session
+                    if (user != null && email.equals("shokoufeh.mokhtari@gmail.com")) {
+                        session = request.getSession();
+                        session.setAttribute("uid", user.id);
+                        response.sendRedirect("admin.jsp");
+                        // set message
+                    } else if (user != null) {
+                        session = request.getSession();
+                        session.setAttribute("uid", user.id);
+                        response.sendRedirect("index.jsp");
+                        // set message
+                    }
+                    else {
+                        userMsg = "Wrong email or password.";
+                    }
+                    // other exceptions could be database connection problems    
+                } catch (Exception ex) {
+                    userMsg = "Login failed.";
+                }
+            }
+            // handle sign out
+        } else if (action.compareTo("signout") == 0) {
+            session = request.getSession();
+            session.removeAttribute("uid");
+            response.sendRedirect("index.jsp");
+            return;
+        }
+    } catch (Exception e) {
+        // no need to handle the exception
+    }
+%>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Conference.com</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="css/jquery-ui.css" rel="stylesheet">
+        <link href="css/bootstrap-select.min.css" rel="stylesheet">
+        <link href="css/validationEngine.jquery.css" rel="stylesheet">
+        <script src="js/bootstrap-modal.js"></script>
+        <link href="css/generalLayout.css" rel="stylesheet">
+         <link href="css/global.css" rel="stylesheet">
+        <link href="css/home_page.css" rel="stylesheet">
+
+        <link href="css/jquery-ui-timepicker-addon.css" rel="stylesheet">
+        <script src="js/jquery-1.10.1.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery-ui-sliderAccess.js"></script>
+        <script src="js/jquery-ui-timepicker-addon.js"></script>
+        <script src="js/bootstrap-select.min.js"></script>
+        <script src="js/jquery.validationEngine-en.js"></script>
+        <script src="js/jquery.validationEngine.js"></script>
+        <script src="js/bootstrap-carousel.js"></script>
+        <script src="js/bootstrap-tooltip.js"></script>
+         <script src="js/alert.js"></script>
+    </head>
+    <body style="z-index:0;">
+        <!-- register and login in-->
+        
+        <div class="container ">
+            <ul class="nav nav-pills pull-right">
+                <form id='signout_form' method='post'>
+                    <%
+                        try {
+                            session = request.getSession();
+                            int uid = Integer.parseInt(session.getAttribute("uid").toString());
+                            UserManager mgnr = new UserManager();
+                            UserInfo user = mgnr.getUserById(uid);
+                            if (user != null) {
+                                String link = "UserProfile.jsp";
+                                if(user.email.equals("shokoufeh.mokhtari@gmail.com")){
+                                    link = "admin.jsp";
+                                }
+                                out.print("<li><a href='" + link + "' class='small_font'>Welcome, " + user.firstName + "</a>&nbsp;&nbsp;&nbsp;&nbsp;<a herf='' class='small_font' onclick='signout();'>sign out</a></li>");
+                            } else {
+                                out.print("<li><a href='SessionSelection.jsp'>register</a><a href=\"#\" class=\"small_font\" onclick=\"$('#signin_panel').modal('show');\"\">&nbsp;\\&nbsp;sign in</a></li>");
+                            }
+                        } catch (Exception ex) {
+                            out.print("<li><a href='SessionSelection.jsp'>register</a><a href=\"#\" class=\"small_font\" onclick=\"$('#signin_panel').modal('show');\"\">&nbsp;\\&nbsp;sign in</a></li>");
+                        }
+                    %>
+                    <input id='signout_flag' type='hidden' value='signout' name='user_action'/>
+                </form>
+            </ul>
+        </div>
+        <%
+            if (userMsg.compareTo("") != 0) {
+                out.println("<div class='alert pull-right' style='margin:0px 130px 0px 20px;'>"
+                        + "<button type='button' class='close' data-dismiss='alert'>&times;</button>"
+                        + "<strong>Warning!</strong>"
+                        + userMsg + "</div>");
+            }
+        %>   
+        <div class="logo">
+            <div class="purple_large_font">Conference.com </div></br>
+        Miami | Feb 21, 2014 To Feb 23, 2014
+        </div>
+        <!--navigation-->
+        <div class ="container ">
+            <div class="row">
+                <div class="span1"></div>
+                <div>
+                    <ul class="nav nav-pills header_menu" style="margin-bottom:2px;">
+                        <!--<li><a href="index.jsp" class="title_font">Conference.com</a></li> -->
+                        <li id="index_tab"><a href="index.jsp" class="mid_font">Home</a></li>
+                        <!--<li><a href="#" class="mid_font">Car type</a></li>-->
+                        <li id="about_us_tab"><a href="Speakers.jsp" class="mid_font">Speakers</a></li>
+                        <li id="about_us_tab"><a href="Sessions.jsp" class="mid_font">Schedule</a></li>
+                        <li id="about_us_tab"><a href="#" class="mid_font">Papers</a></li>
+                        <li id="about_us_tab"><a href="#" class="mid_font">About us</a></li>
+                    </ul> 
+                    
+                </div>
+            </div>
+        </div>
+        <!--signin panel-->
+        <div id="signin_panel" class="modal hide fade" style="border:0px; width:520px; padding-bottom:20px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Sign in</h3>
+            </div>
+            <div id=""style='margin:0px 20px 0px 20px;'>
+                <form id="user_signin_form" method="post">
+                    <a href="SessionSelection.jsp" >register</a>
+                    <h4 class="form-style-heading mid_font">Welcome to Conference.com</h4>
+                    <input id="signin_email" name="email" type="text" class="input-block-level validate[required,custom[email]]" placeholder="Email address" style='width:300px;'><br/>
+                    <input id="signin_password" name="password" type="password" class="input-block-level validate[required, custom[onlyLetterNumber], minSize[8], maxSize[16]]" placeholder="Password" style='width:300px;'><br/>
+                    <div class="control-group">
+                        <div class="controls pull-right">
+                            <button type="submit" class="btn btn-primary" onclick="">Sign in</button>
+                        </div>
+                    </div>
+                    <!--save some information needed to post to the server-->
+                    <input id='signin_flag' type="hidden" value="signin" name="user_action"></input>
+                </form>
+            </div>
+        </div>
+        <!--<a href="SessionSelection.jsp"><button class="btn">Register</button></a> -->
+        <script>
+            
+            $(document).ready(function() {
+               
+                $("#user_signin_form").validationEngine('attach',
+                {
+                    promptPosition: "topLeft",
+                    scroll: false,
+                    autoHidePrompt: true
+                });
+            });
+            function signout()
+            {
+                $("#signout_form").submit();
+            }
+        </script>
+        
+       
