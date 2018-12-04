@@ -24,10 +24,10 @@ In addition to the functionalities we were given several requirements in order t
     6. Food (vegetarian?)
     7. Comments 
 - Transaction processing
-  ⋅⋅*Fee adjustment (early/normal/onsite registration) 
-  ⋅⋅*Fee type (student/regular/special) 
-  ⋅⋅*Papers statistics
-  ⋅⋅*One credit card for multiple registration
+   1. Fee adjustment (early/normal/onsite registration) 
+   2. Fee type (student/regular/special) 
+   3. Papers statistics
+   4. One credit card for multiple registration
 - Logging
 - Confirmation Email (message)/Receipt (printable)
 - Transaction exporting (user/admin, to .csv file)
