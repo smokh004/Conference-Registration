@@ -16,13 +16,13 @@ In addition to the functionalities we were given several requirements in order t
 -	User sign-up (users’ names, password, institution, email)
 -	User login/logout (session control)
 -	Registration form
-  	*-Paper registration
-    *-Fee (student/non-student/free)
-    *-Tutorial
-    *-Activity (banquet, symposium)
-    *-Ticket 
-    *-Food (vegetarian?)
-    *-Comments 
+  	1. Paper registration
+    2. Fee (student/non-student/free)
+    3. Tutorial
+    4. Activity (banquet, symposium)
+    5. Ticket 
+    6. Food (vegetarian?)
+    7. Comments 
 - Transaction processing
   ⋅⋅*Fee adjustment (early/normal/onsite registration) 
   ⋅⋅*Fee type (student/regular/special) 
