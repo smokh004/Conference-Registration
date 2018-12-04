@@ -16,8 +16,8 @@ In addition to the functionalities we were given several requirements in order t
 -	User sign-up (users’ names, password, institution, email)
 -	User login/logout (session control)
 -	Registration form
-  -Paper registration
-  -Fee (student/non-student/free)
+    1.Paper registration
+    2. Fee (student/non-student/free)
     3. Tutorial
     4. Activity (banquet, symposium)
     5. Ticket 
@@ -34,5 +34,7 @@ In addition to the functionalities we were given several requirements in order t
 - Character encoding to support for different language
 - Can not duplicate registration on the same paper.
 - Each paper has a unique id. 
+
+
 
 
