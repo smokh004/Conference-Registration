@@ -16,7 +16,7 @@ In addition to the functionalities we were given several requirements in order t
 -	User sign-up (users’ names, password, institution, email)
 -	User login/logout (session control)
 -	Registration form
-  	⋅⋅*Paper registration
+  	 *Paper registration
     ⋅⋅*Fee (student/non-student/free)
     ⋅⋅*Tutorial
     ⋅⋅*Activity (banquet, symposium)
